@@ -1,6 +1,6 @@
 
 ANDROID_VERSION = android_6.0.1_r1
-TOOLS = $(PWD)/tools
+TOOLS = $(shell pwd)/tools
 PYTHON = python2.7
 
 all: interface stub packageBuilder
