@@ -62,16 +62,24 @@ class SimpleCompiler(Compiler.Compiler):
                 subName, subImplements, subDecorators = getClassScheme_helper(comp, self.solver, self.vManager)
                 depends = deferImplement_helper(self.vManager, subImplements)
                 if  len(depends) > 0:
-                    self.classGraph[subName] = depends
-                    self.outsideClasses[subName] = comp
+                    self.deferManager.classGraph[subName] = depends
+                    try:
+                        self.outsideClasses[subName] = comp
+                    except AttributeError:
+                        self.outsideClasses = {}
+                        self.outsideClasses[subName] = comp
                 else:
                     self.solver(comp)
             elif type(comp) == plyj.InterfaceDeclaration:
                 subName, subImplements, subDecorators = getInterfaceScheme_helper(comp, self.solver, self.vManager)
                 depends = deferImplement_helper(self.vManager, subImplements)
                 if  len(depends) > 0:
-                    self.classGraph[subName] = depends
-                    self.outsideClasses[subName] = comp
+                    self.deferManager.classGraph[subName] = depends
+                    try:
+                        self.outsideClasses[subName] = comp
+                    except AttributeError:
+                        self.outsideClasses = {}
+                        self.outsideClasses[subName] = comp
                 else:
                     self.solver(comp)
             else:
@@ -121,16 +129,24 @@ class SimpleCompiler(Compiler.Compiler):
                 subName, subImplements, subDecorators = getClassScheme_helper(comp, self.solver, self.vManager)
                 depends = deferImplement_helper(self.vManager, subImplements)
                 if  len(depends) > 0:
-                    self.classGraph[subName] = depends
-                    self.outsideClasses[subName] = comp
+                    self.deferManager.classGraph[subName] = depends
+                    try:
+                        self.outsideClasses[subName] = comp
+                    except AttributeError:
+                        self.outsideClasses = {}
+                        self.outsideClasses[subName] = comp
                 else:
                     self.solver(comp)
             elif type(comp) == plyj.InterfaceDeclaration:
                 subName, subImplements, subDecorators = getInterfaceScheme_helper(comp, self.solver, self.vManager)
                 depends = deferImplement_helper(self.vManager, subImplements)
                 if  len(depends) > 0:
-                    self.classGraph[subName] = depends
-                    self.outsideClasses[subName] = comp
+                    self.deferManager.classGraph[subName] = depends
+                    try:
+                        self.outsideClasses[subName] = comp
+                    except AttributeError:
+                        self.outsideClasses = {}
+                        self.outsideClasses[subName] = comp
                 else:
                     self.solver(comp)
             else:
@@ -175,6 +191,8 @@ class SimpleCompiler(Compiler.Compiler):
                 ", ".join(args)), offset = -1)
         else:
             self.p("def {}({}):\n".format(functionName, ", ".join(args)), offset = -1)
+        self.p("import __builtin__\n")
+        self.p("__builtin__.methodCalledCount+=1\n")
         self.p("pass\n")
         
 

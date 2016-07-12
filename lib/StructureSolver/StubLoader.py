@@ -10,6 +10,7 @@ class StubLoader(object):
     """docstring for TransactionLoader"""
     def __init__(self, stubFolderName, loadOnly = None):
         self.stubFolderName = stubFolderName
+        sys.path.append(stubFolderName)
         self.package = stubFolderName
         self.stubs = {}
         count = 0
@@ -26,7 +27,8 @@ class StubLoader(object):
         logger.info("Total load in {} modules".format(count))
 
     def loadStubModule(self, name):
-        _from   = "{}.{}".format(self.package, name)
+#       _from   = "{}.{}".format(self.package, name)
+        _from   = "{}".format(name)
         _import = name
         module  = __import__(_from, globals(), locals(), [_import])
         instance = module.OnTransact()

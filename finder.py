@@ -1,4 +1,7 @@
 #!/usr/bin/env python2.7 -W ignore
+import __builtin__
+__builtin__.methodCalledCount = 0
+__builtin__.methodPacCalledCount = 0
 import logging
 import os
 import json
@@ -18,9 +21,10 @@ from lib.FilterAdaptor import FilterAdaptor
 
 import tools.Config as Config
 
-import __builtin__
+
 
 __builtin__.json_output = {}
+
 
 def finder(fd, filter=None, ps=None):
     """finder entry function"""
@@ -108,6 +112,7 @@ def parseArgument():
     return args
 
 if __name__ == '__main__':
+
     logging.basicConfig(level = logging.INFO)
     logger = logging.getLogger(__name__)
 
@@ -119,3 +124,5 @@ if __name__ == '__main__':
     Module.getModule().add("TimeSlicer")
     
     finder(args.input, filter=filter, ps=args.ps)
+    print "Total Empty:",__builtin__.methodCalledCount
+    print "Total Package:",__builtin__.methodPacCalledCount

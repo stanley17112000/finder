@@ -44,12 +44,12 @@ class ProcessTable(object):
         return (self.table[pid]["name"], self.table[pid]["type"])
 
     def readFromPs(self, ps):
-        rawline = ps.readline().strip("\n\r")
+        rawline = ps.readline().strip("\n")
         headlines = re.split(r' +', rawline)
         pidOffset = headlines.index("PID")
         nameOffset = headlines.index("NAME")
 
-        for line in ps.read().split("\r\n"):
+        for line in ps.read().split("\n"):
             data = re.split(r' +', line)
             if  len(data) < nameOffset:
                 continue

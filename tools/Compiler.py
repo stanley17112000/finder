@@ -111,6 +111,7 @@ class Compiler(object):
     def c(self, fmt):
         if  self.fd is not None:
             self.fd.write("{}# {}\n".format(self.indentPattern*(self.level), fmt))
+        return
 
     def p(self, fmt, offset=0):
         indents =  self.indentPattern * (self.level + offset)
@@ -466,6 +467,8 @@ class Compiler(object):
             result = self.solver(stmt)
             if  result:
                 self.p(result + "\n")
+        self.p("import __builtin__\n")
+        self.p("__builtin__.methodPacCalledCount+=1\n")
 
     def AnnotationDeclaration(self, body):
         return
@@ -990,9 +993,9 @@ def dumper(body, stop = False):
 if __name__ == '__main__':
     logging.basicConfig(level = logging.INFO)
     
-    root = "/Volumes/android/sdk-source-5.1.1_r1/frameworks/base/core/java"
-    inputPath = "/Volumes/android/sdk-source-5.1.1_r1/frameworks/base/core/java/android/os/StrictMode.java"
-    # inputPath = "/Volumes/android/sdk-source-5.1.1_r1/frameworks/base/telecomm/java/android/telecom/PhoneAccountHandle.java"
+    root = "/home/user/android-5.1.1_r1/frameworks/base/core/java"
+    inputPath = "/home/user/android-5.1.1_r1/frameworks/base/core/java/android/os/StrictMode.java"
+#   inputPath = "/home/user/android-5.1.1_r1/frameworks/base/telecomm/java/android/telecom/PhoneAccountHandle.java"
     with open(inputPath, "r") as inputFd:
         compiler = Compiler(sys.stdout)
         print compiler.compilePackage(root, inputPath)
