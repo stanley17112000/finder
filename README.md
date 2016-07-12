@@ -66,6 +66,24 @@ create the destination directory to put repo
 
 Now your Finder is support version 5.1.1!
 
+Build Steps
+----
+
+- Modify ANDROID\_SDK\_SRC in config according to your sdk location
+
+- use python to execute the following file
+
+  - tools/CollectionIInterface.py
+
+  - tools/dumpTransactionCodeFromInterface.py
+
+  - tools/stubTranslator.py
+
+  - tools/PackageBuilder.py
+
+  - tools/CreateEmptyLibrary.py
+
+
 Module System
 ----
 
